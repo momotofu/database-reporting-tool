@@ -37,8 +37,25 @@ def list_authors_by_popularity():
     db.close()
     return author_views
 
-def requests_days_with_errors():
-    pass
-
+def request_days_with_errors():
+    db = psycopg2.connect(database=DBNAME)
+    cursor = db.cursor()
+    cursor.execute("""
+        select day, round(percentage, 2) as percentage
+            from (select B.day, (1.0 * b_occurances / occurances * 100) as
+            percentage
+                from good_status_by_day as A, bad_status_by_day as B
+                where A.day = B.day) as subq
+             where percentage > 1;
+        """)
+    result = cursor.fetchall()
+    db.close()
+    return result
 print(top_three_articles())
 print(list_authors_by_popularity())
+print(request_days_with_errors())
+# status_by_day
+# bad_status_by_day
+# good_status_by_day
+# select B.day, (1.0 * bad_occurance / occurances * 100) as percentage from
+# good_status_counts as A, bad_occurances as B where A.day = B.day;
