@@ -51,11 +51,14 @@ def request_days_with_errors():
     result = cursor.fetchall()
     db.close()
     return result
+
+def print_results():
+    pass
+
 print(top_three_articles())
 print(list_authors_by_popularity())
 print(request_days_with_errors())
+
 # status_by_day
 # bad_status_by_day
 # good_status_by_day
-# select B.day, (1.0 * bad_occurance / occurances * 100) as percentage from
-# good_status_counts as A, bad_occurances as B where A.day = B.day;
