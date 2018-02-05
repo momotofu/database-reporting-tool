@@ -43,7 +43,6 @@ Days with errors over 1%:
 ||   2016-07-17  |      2.32        ||
 --------------------------------------
 
-
 ```
 ## Questions answered:
 1. What are the most popular three articles of all time?
@@ -51,6 +50,12 @@ Days with errors over 1%:
 3. On which days did more than 1% of requests lead to errors?
 
 ## Design considerations
+All questions are answered by a single SQL query, leaving the heaving
+lifting to the database (minimal python "post-processing"). As a result
+some database views were created (see Database views below).
+
+I kept the code clean and modular by separating printing functions into
+their own module `table_str.py`, and by conforming to Pep8 guidelines.
 
 ## Database views
 **status_by_day**
