@@ -1,10 +1,15 @@
 import psycopg2
-from table_str import format_row
+from table_str import format_row, print_result_table
 
 """
-1. define a function for each query
-2. print information neatly into console
+queries the news database
+
+Views created in db:
+status_by_day
+bad_status_by_day
+good_status_by_day
 """
+
 DBNAME = 'news'
 
 def top_three_articles():
@@ -53,13 +58,9 @@ def request_days_with_errors():
     db.close()
     return result
 
+print_result_table('Top three articles: ', ['views', 'article title'], top_three_articles())
+print_result_table('Authors by popularity: ', ['author name', 'views'],
+        list_authors_by_popularity())
+print_result_table('Days with errors over 1%: ', ['day', 'error percentage'],
+        request_days_with_errors())
 
-
-print_result('Top three articles: ', ['views', 'article title'], top_three_articles())
-# top_three_articles())
-# list_authors_by_popularity())
-# request_days_with_errors())
-
-# status_by_day
-# bad_status_by_day
-# good_status_by_day
