@@ -1,4 +1,5 @@
 import psycopg2
+import table_str
 
 """
 1. define a function for each query
@@ -52,12 +53,28 @@ def request_days_with_errors():
     db.close()
     return result
 
-def print_results():
-    pass
 
-print(top_three_articles())
-print(list_authors_by_popularity())
-print(request_days_with_errors())
+def print_result(message, col_names, list_of_tup):
+    print(message)
+    output_list = []
+
+    for item in list_of_tup:
+        output = ''
+        for item_a in item:
+             output += " | " + str(item_a)
+        output = '|' + output[1:]
+        output_list.append(output)
+
+    max_len = len(max(output_list, key=len))
+
+    for line in output_list:
+        print(line.ljust(max_len + 1, " ") + '||')
+
+# print_result('Top three articles: ', top_three_articles())
+print(table_str.format_row(['a', 'b', 'c'], True, 10))
+# top_three_articles())
+# list_authors_by_popularity())
+# request_days_with_errors())
 
 # status_by_day
 # bad_status_by_day
