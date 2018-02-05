@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def format_row(values, max_width, top_line):
     """
     Returns a formated row as a string.
