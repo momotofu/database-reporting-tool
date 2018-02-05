@@ -8,10 +8,49 @@ The database is running on PostgreSQL.
 ## Usage instructions
 On the server where the DB is running execute the following command: `python3 print_report.py`
 
+example output:
+```
+Top three articles:
+===================================================
+||         views         |     article title     ||
+===================================================
+||         338647        |   candidate is jerk   ||
+---------------------------------------------------
+||         253801        |   bears love berries  ||
+---------------------------------------------------
+||         170098        |    bad things gone    ||
+---------------------------------------------------
+
+
+Authors by popularity:
+===========================================================
+||        author name        |           views           ||
+===========================================================
+||      Ursula La Multa      |           507594          ||
+-----------------------------------------------------------
+||   Rudolf von Treppenwitz  |           423457          ||
+-----------------------------------------------------------
+||   Anonymous Contributor   |           170098          ||
+-----------------------------------------------------------
+||       Markoff Chaney      |           84557           ||
+-----------------------------------------------------------
+
+
+Days with errors over 1%:
+======================================
+||      day      | error percentage ||
+======================================
+||   2016-07-17  |      2.32     ||
+-----------------------------------
+
+
+```
 ## Questions answered:
 1. What are the most popular three articles of all time?
 2. Who are the most popular article authors of all time?
 3. On which days did more than 1% of requests lead to errors?
+
+## Design considerations
 
 ## Database views
 **status_by_day**
