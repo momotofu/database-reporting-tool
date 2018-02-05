@@ -1,4 +1,12 @@
 def format_row(values, max_width, top_line):
+    """
+    Returns a formated row as a string.
+
+    Parameters:
+    values: a list ove values for each column
+    max_width: (int) max column width
+    top_line: (boolean) print a top-line
+    """
     output = ''
 
     # formate center of row
