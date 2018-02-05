@@ -54,31 +54,6 @@ def request_days_with_errors():
     return result
 
 
-def print_result(message, col_names, list_of_tup):
-    print(message)
-    output_list = []
-    col_width = 0
-    padding = 3
-
-    # find logest col
-    for item in list_of_tup:
-        for item_a in item:
-            width = len(str(item_a))
-            if width > col_width:
-                col_width = width
-
-    # Add column labels
-    output_list.append(format_row(col_names, col_width + padding, True))
-    for item in list_of_tup:
-        row_items = []
-        for item_a in item:
-            row_items.append(item_a)
-        output_list.append(format_row(row_items, col_width + padding,
-            False))
-
-    for item in output_list:
-        print(item)
-    print('\n')
 
 print_result('Top three articles: ', ['views', 'article title'], top_three_articles())
 # top_three_articles())
