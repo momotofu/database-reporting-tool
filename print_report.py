@@ -10,18 +10,21 @@ bad_status_by_day
 good_status_by_day
 """
 
+
 DBNAME = 'news'
 
 def top_three_articles():
     db = psycopg2.connect(database=DBNAME)
     cursor = db.cursor()
     cursor.execute("""
-        select count(*) as views, replace(replace(path, '/article/', ''), '-', ' ')
-        as title from log group by path order by views desc offset 1 limit 3;
+        select count(*) as views, replace(replace(path, '/article/', ''),
+        '-', ' ') as title from log group by path order by views desc
+        offset 1 limit 3;
     """)
     top_three = cursor.fetchall()
     db.close()
     return top_three
+
 
 def list_authors_by_popularity():
     db = psycopg2.connect(database=DBNAME)
@@ -29,7 +32,8 @@ def list_authors_by_popularity():
     cursor.execute("""
         select name, sum(views) as views
             from (select author, views
-                from (select count(*) as views, replace(path, '/article/', '') as slug
+                from (select count(*) as views, replace(path, '/article/', '')
+                as slug
                     from log
                     group by path
                     order by views
@@ -42,6 +46,7 @@ def list_authors_by_popularity():
     author_views = cursor.fetchall()
     db.close()
     return author_views
+
 
 def request_days_with_errors():
     db = psycopg2.connect(database=DBNAME)
@@ -58,9 +63,19 @@ def request_days_with_errors():
     db.close()
     return result
 
-print_result_table('Top three articles: ', ['views', 'article title'], top_three_articles())
-print_result_table('Authors by popularity: ', ['author name', 'views'],
-        list_authors_by_popularity())
-print_result_table('Days with errors over 1%: ', ['day', 'error percentage'],
-        request_days_with_errors())
+print_result_table(
+    'Top three articles: ',
+    ['views', 'article title'],
+    top_three_articles()
+    )
+print_result_table(
+    'Authors by popularity: ',
+    ['author name', 'views'],
+    list_authors_by_popularity()
+    )
+print_result_table(
+    'Days with errors over 1%: ',
+    ['day', 'error percentage'],
+    request_days_with_errors()
+    )
 
