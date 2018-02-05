@@ -54,8 +54,7 @@ def print_result_table(message, col_names, list_of_tup):
         row_items = []
         for item_a in item:
             row_items.append(item_a)
-        output_list.append(format_row(row_items, col_width + padding,
-        False))
+        output_list.append(format_row(row_items, col_width + padding, False))
 
     for item in output_list:
         print(item)
