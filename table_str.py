@@ -7,6 +7,7 @@ def format_row(values, max_width, top_line):
     max_width: (int) max column width
     top_line: (boolean) print a top-line
     """
+
     output = ''
 
     # formate center of row
@@ -24,6 +25,7 @@ def format_row(values, max_width, top_line):
         output += '\n' + '-' * row_width
 
     return output
+
 
 def print_result_table(message, col_names, list_of_tup):
     """
@@ -58,3 +60,4 @@ def print_result_table(message, col_names, list_of_tup):
     for item in output_list:
         print(item)
     print('\n')
+
