@@ -68,15 +68,17 @@ def print_result(message, col_names, list_of_tup):
                 col_width = width
 
     # Add column labels
-    output_list.append(format_row(col_names, True, col_width + padding))
+    output_list.append(format_row(col_names, col_width + padding, True))
     for item in list_of_tup:
         row_items = []
         for item_a in item:
             row_items.append(item_a)
-        output_list.append(format_row(row_items, None, col_width + padding))
+        output_list.append(format_row(row_items, col_width + padding,
+            False))
 
     for item in output_list:
         print(item)
+    print('\n')
 
 print_result('Top three articles: ', ['views', 'article title'], top_three_articles())
 # top_three_articles())

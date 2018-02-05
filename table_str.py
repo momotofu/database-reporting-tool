@@ -1,5 +1,6 @@
-def format_row(values, top_line, max_width):
+def format_row(values, max_width, top_line):
     output = ''
+
     # formate center of row
     for value in values:
         output += ' | ' + str(value).center(max_width, ' ')
