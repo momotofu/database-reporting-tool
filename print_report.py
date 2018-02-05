@@ -1,5 +1,5 @@
 import psycopg2
-import table_str
+from table_str import format_row
 
 """
 1. define a function for each query
@@ -57,21 +57,28 @@ def request_days_with_errors():
 def print_result(message, col_names, list_of_tup):
     print(message)
     output_list = []
+    col_width = 0
+    padding = 3
 
+    # find logest col
     for item in list_of_tup:
-        output = ''
         for item_a in item:
-             output += " | " + str(item_a)
-        output = '|' + output[1:]
-        output_list.append(output)
+            width = len(str(item_a))
+            if width > col_width:
+                col_width = width
 
-    max_len = len(max(output_list, key=len))
+    # Add column labels
+    output_list.append(format_row(col_names, True, col_width + padding))
+    for item in list_of_tup:
+        row_items = []
+        for item_a in item:
+            row_items.append(item_a)
+        output_list.append(format_row(row_items, None, col_width + padding))
 
-    for line in output_list:
-        print(line.ljust(max_len + 1, " ") + '||')
+    for item in output_list:
+        print(item)
 
-# print_result('Top three articles: ', top_three_articles())
-print(table_str.format_row(['a', 'b', 'c'], True, 10))
+print_result('Top three articles: ', ['views', 'article title'], top_three_articles())
 # top_three_articles())
 # list_authors_by_popularity())
 # request_days_with_errors())
