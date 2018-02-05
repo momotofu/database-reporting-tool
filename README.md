@@ -6,7 +6,7 @@ The database contains newspaper articles, as well as the web server log for the 
 The database is running on PostgreSQL.
 
 ## Usage instructions
-On the server where the DB is running execute the following command 
+On the server where the DB is running execute the following command    
 `python3 print_report.py`
 
 ### Questions answered:
