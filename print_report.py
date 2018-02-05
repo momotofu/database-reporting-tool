@@ -13,6 +13,7 @@ good_status_by_day
 
 DBNAME = 'news'
 
+
 def top_three_articles():
     db = psycopg2.connect(database=DBNAME)
     cursor = db.cursor()
