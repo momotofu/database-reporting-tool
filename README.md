@@ -6,15 +6,14 @@ The database contains newspaper articles, as well as the web server log for the 
 The database is running on PostgreSQL.
 
 ## Usage instructions
-On the server where the DB is running execute the following command    
-`python3 print_report.py`
+On the server where the DB is running execute the following command: `python3 print_report.py`
 
-### Questions answered:
+## Questions answered:
 1. What are the most popular three articles of all time?
 2. Who are the most popular article authors of all time?
 3. On which days did more than 1% of requests lead to errors?
 
-### Database views
+## Database views
 **status_by_day**
 ```
 SELECT count(log.status) AS occurances,
