@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-
 import psycopg2
-from table_str import format_row, print_result_table
 
+
+from table_str import format_row, print_result_table
 """
 queries the news database
 
@@ -11,7 +11,6 @@ status_by_day
 bad_status_by_day
 good_status_by_day
 """
-
 
 DBNAME = 'news'
 
