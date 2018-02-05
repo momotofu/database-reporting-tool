@@ -51,6 +51,11 @@ def print_result_table(message, col_names, list_of_tup):
             if width > col_width:
                 col_width = width
 
+    for item in col_names:
+        width = len(item)
+        if width > col_width:
+            col_width = width
+
     # Add column labels
     output_list.append(format_row(col_names, col_width + padding, True))
     for item in list_of_tup:
