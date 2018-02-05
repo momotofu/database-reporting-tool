@@ -7,8 +7,10 @@ def format_row(values, top_line, max_width):
 
     # add top and or bottom lines
     row_width = len(output)
+    line = '-' * row_width
     if top_line:
-        output = '-' * row_width + '\n' + output + '\n' + '-' * row_width
+        line = '=' * row_width
+        output = line + '\n' + output + '\n' + line
     else:
         output += '\n' + '-' * row_width
 
