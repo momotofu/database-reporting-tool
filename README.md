@@ -60,12 +60,11 @@ their own module `table_str.py`, and by conforming to Pep8 guidelines.
 ## Database views
 **status_by_day**
 ```
-SELECT count(log.status) AS occurances,
-  log."time"::date AS day,
-  log.status
+create view status_by_day as SELECT count(status) AS occurances,
+  CAST(time AS DATE), status
  FROM log
-GROUP BY log.status, (log."time"::date)
-ORDER BY (log."time"::date) DESC;
+GROUP BY status, day
+ORDER BY day DESC;
 ```
 
 **good_status_by_day**
