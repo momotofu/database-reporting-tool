@@ -1,14 +1,50 @@
 # Database reporting tool
-I've been asked to build an internal reporting tool that will use information from the database to discover what kind of articles the site's readers like.
+This is an internal reporting tool that uses information from the database (PostgreSQL) to discover what kind of articles the site's readers like.
 
-The database contains newspaper articles, as well as the web server log for the site. The log has a database row for each time a reader loaded a web page. Using that information, I've answers questions about the site's user activity.
+The database contains newspaper articles, slugs, authors etc. as well as the server log for the site. The log has a records row for each time a reader loaded a web page and contains user path, ip, HTTP method, status, time, and user id.
 
-The database is running on PostgreSQL.
+**The following statistics were discovered.**
+1. What are the most popular three articles of all time?
+2. Who are the most popular article authors of all time?
+3. On which days did more than 1% of requests lead to errors?
 
 ## Usage instructions
-On the server where the DB is running execute the following command: `python3 print_report.py`
+This tool requires creating SQL views and is run on ubuntu-16.04-i386.
+For information on the psql CLI see [psql documentation](https://www.postgresql.org/docs/current/static/app-psql.html).
 
-example output:
+1. login to the server and connect to the news database using: `psql news`
+2. copy and past the following view creation commands into your
+   terminal.
+
+**status_by_day**
+```
+CREATE VIEW status_by_day as SELECT count(status) AS occurances,
+  CAST(time AS DATE), status
+ FROM log
+GROUP BY status, day
+ORDER BY day DESC;
+```
+
+**good_status_by_day**
+```
+CREATE VIEW good_status_by_day as SELECT occurances,
+  day,
+  status
+ FROM status_by_day
+WHERE status = '200 OK';
+```
+
+**bad_status_by_day**
+```
+CREATE VIEW bad_status_by_day as SELECT occurances AS b_occurances,
+  day,
+  status
+ FROM status_by_day
+WHERE status != '200 OK';
+```
+3. Execute the following command: `python3 print_report.py`
+
+Below is an example output:
 ```
 Top three articles:
 ===================================================
@@ -44,43 +80,11 @@ Days with errors over 1%:
 --------------------------------------
 
 ```
-## Questions answered:
-1. What are the most popular three articles of all time?
-2. Who are the most popular article authors of all time?
-3. On which days did more than 1% of requests lead to errors?
 
 ## Design considerations
-All questions are answered by a single SQL query, leaving the heaving
+All statistics are queried by a single SQL query, leaving the heavy
 lifting to the database (minimal python "post-processing"). As a result
-some database views were created (see Database views below).
+some database views were created.
 
-I kept the code clean and modular by separating printing functions into
+The code was kept clean and modular by separating printing functions into
 their own module `table_str.py`, and by conforming to Pep8 guidelines.
-
-## Database views
-**status_by_day**
-```
-create view status_by_day as SELECT count(status) AS occurances,
-  CAST(time AS DATE), status
- FROM log
-GROUP BY status, day
-ORDER BY day DESC;
-```
-
-**good_status_by_day**
-```
-SELECT status_by_day.occurances,
-  status_by_day.day,
-  status_by_day.status
- FROM status_by_day
-WHERE status_by_day.status = '200 OK'::text;
-```
-
-**bad_status_by_day**
-```
-SELECT status_by_day.occurances AS b_occurances,
-  status_by_day.day,
-  status_by_day.status
- FROM status_by_day
-WHERE status_by_day.status <> '200 OK'::text;
-```
