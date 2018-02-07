@@ -32,18 +32,17 @@ def list_authors_by_popularity():
     db = psycopg2.connect(database=DBNAME)
     cursor = db.cursor()
     cursor.execute("""
-        select name, sum(views) as views
-            from (select author, views
-                from (select count(*) as views, replace(path, '/article/', '')
-                as slug
-                    from log
-                    group by path
-                    order by views
-                    desc offset 1) as A, articles
-                where A.slug = articles.slug) as B, authors
-            where B.author = authors.id
-            group by name
-            order by views desc;
+        SELECT name, SUM(views) AS views
+            FROM (SELECT author, views
+                FROM (SELECT COUNT(*) AS views, REPLACE(path, '/article/', '')
+                AS slug
+                    FROM log
+                    GROUP BY path
+                    ORDER BY views DESC OFFSET 1) AS A, articles
+                WHERE A.slug = articles.slug) AS B, authors
+            WHERE B.author = authors.id
+            GROUP BY name
+            ORDER BY views DESC;
     """)
     author_views = cursor.fetchall()
     db.close()
