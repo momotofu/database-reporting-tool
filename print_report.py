@@ -19,9 +19,12 @@ def top_three_articles():
     db = psycopg2.connect(database=DBNAME)
     cursor = db.cursor()
     cursor.execute("""
-        select count(*) as views, replace(replace(path, '/article/', ''),
-        '-', ' ') as title from log group by path order by views desc
-        offset 1 limit 3;
+        SELECT COUNT(*) as VIEWS, REPLACE(REPLACE(path, '/article/', ''),
+        '-', ' ') AS title
+        FROM log
+        GROUP BY path
+        ORDER by views DESC
+        OFFSET 1 LIMIT 3;
     """)
     top_three = cursor.fetchall()
     db.close()
@@ -53,12 +56,12 @@ def request_days_with_errors():
     db = psycopg2.connect(database=DBNAME)
     cursor = db.cursor()
     cursor.execute("""
-        select day, round(percentage, 2) as percentage
-            from (select B.day, (1.0 * b_occurances / occurances * 100) as
+        SELECT day, ROUND(percentage, 2) AS percentage
+            FROM (SELECT B.day, (1.0 * b_occurances / occurances * 100) AS
             percentage
-                from good_status_by_day as A, bad_status_by_day as B
-                where A.day = B.day) as subq
-             where percentage > 1;
+                FROM good_status_by_day AS A, bad_status_by_day AS B
+                WHERE A.day = B.day) AS subq
+             WHERE percentage > 1;
         """)
     result = cursor.fetchall()
     db.close()
