@@ -67,6 +67,7 @@ def request_days_with_errors():
     db.close()
     return result
 
+
 print_result_table(
     'Top three articles: ',
     ['views', 'article title'],
@@ -82,4 +83,3 @@ print_result_table(
     ['day', 'error percentage'],
     request_days_with_errors()
     )
-

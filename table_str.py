@@ -67,4 +67,3 @@ def print_result_table(message, col_names, list_of_tup):
     for item in output_list:
         print(item)
     print('\n')
-
