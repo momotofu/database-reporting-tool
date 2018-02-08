@@ -19,7 +19,7 @@ For information on the psql CLI see [psql documentation](https://www.postgresql.
 **status_by_day**
 ```
 CREATE VIEW status_by_day as SELECT count(status) AS occurances,
-  CAST(time AS DATE), status
+  CAST(time AS DATE) as day, status
  FROM log
 GROUP BY status, day
 ORDER BY day DESC;
