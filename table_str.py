@@ -12,6 +12,8 @@ def format_row(values, max_width, top_line):
     """
 
     output = ''
+    if max_width % 2 == 0:
+        max_width += 1
 
     # formate center of row
     for value in values:
