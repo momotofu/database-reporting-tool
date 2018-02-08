@@ -15,6 +15,28 @@ good_status_by_day
 DBNAME = 'news'
 
 
+def connect(db_name):
+    """
+    Connect to the PostgreSQL database. Returns a databse connection.
+    """
+    try:
+        db = psycopg2.connect(database=db_name)
+        c = db.cursor()
+        return db, c
+    except psycopg2.Error as e:
+        print("Unable to connect to database with exception {}".format(e))
+        sys.exit(1)
+
+
+def execute_query(query, connection):
+    db, c = connection
+    c.execute(query)
+    db.commit()
+    result = c.fetchall()
+    db.close()
+    return result
+
+
 def top_three_articles():
     db = psycopg2.connect(database=DBNAME)
     cursor = db.cursor()
@@ -67,6 +89,18 @@ def request_days_with_errors():
     db.close()
     return result
 
+print_result_table(
+    'Top three articles: ',
+    ['views', 'article title'],
+    execute_query("""
+        SELECT COUNT(*) as VIEWS, REPLACE(REPLACE(path, '/article/', ''),
+        '-', ' ') AS title
+            FROM log
+            GROUP BY path
+            ORDER by views DESC
+            OFFSET 1 LIMIT 3;
+    """, connect(DBNAME))
+    )
 
 print_result_table(
     'Top three articles: ',
