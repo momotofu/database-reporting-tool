@@ -13,7 +13,7 @@ This tool requires creating SQL views and is run on ubuntu-16.04-i386.
 For information on the psql CLI see [psql documentation](https://www.postgresql.org/docs/current/static/app-psql.html).
 
 1. login to the server and connect to the news database using: `psql news`
-2. copy and past the following view creation commands into your
+2. copy and paste the following view creation commands into your
    terminal.
 
 **status_by_day**
