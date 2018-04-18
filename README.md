@@ -83,8 +83,7 @@ Days with errors over 1%:
 
 ## Design considerations
 All statistics are queried by a single SQL query, leaving the heavy
-lifting to the database (minimal python "post-processing"). As a result
-some database views were created.
+lifting to the database (minimal python "post-processing"). Database views were necessary in order to achieve this result.
 
 The code was kept clean and modular by separating printing functions into
 their own module `table_str.py`, and by conforming to Pep8 guidelines.
